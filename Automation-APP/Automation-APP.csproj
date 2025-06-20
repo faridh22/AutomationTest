@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net7.0-ios;net7.0-android;net7.0-maccatalyst</TargetFrameworks>
+    <OutputType>Exe</OutputType>
+    <UseMaui>true</UseMaui>
+    <SingleProject>true</SingleProject>
+    <RootNamespace>Automation_APP</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <MauiXaml Remove="**/*.xaml" />
+    <Compile Remove="**/*.xaml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.2" />
+    <MauiXaml Include="**/*.xaml" />
+    <Compile Include="**/*.xaml.cs" />
+  </ItemGroup>
+</Project>
