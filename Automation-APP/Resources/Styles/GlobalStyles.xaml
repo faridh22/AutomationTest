@@ -1,11 +1,24 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
-    <Color x:Key="PrimaryColor">#2196F3</Color>
+    <!-- Primary application color that adapts to the current theme -->
+    <AppThemeColor x:Key="PrimaryColor" Light="#45A4F5" Dark="#64B5F6" />
+
+    <!-- Accent color used for notification badges -->
+    <AppThemeColor x:Key="NotificationBackgroundColor" Light="#FF6F61" Dark="#EF9A9A" />
+
     <Style x:Key="PrimarySearchBar" TargetType="SearchBar">
-        <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}" />
+        <Setter Property="BackgroundColor" Value="{DynamicResource PrimaryColor}" />
     </Style>
+
     <Style x:Key="PrimaryLabel" TargetType="Label">
-        <Setter Property="TextColor" Value="{StaticResource PrimaryColor}" />
+        <Setter Property="TextColor" Value="{DynamicResource PrimaryColor}" />
+    </Style>
+
+    <!-- Style for the notification label displayed in the header -->
+    <Style x:Key="NotificationLabel" TargetType="Label">
+        <Setter Property="BackgroundColor" Value="{DynamicResource NotificationBackgroundColor}" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="Padding" Value="5" />
     </Style>
 </ResourceDictionary>

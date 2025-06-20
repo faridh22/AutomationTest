@@ -20,9 +20,7 @@
             <Label Text="{Binding BoundNotificationCount, Source={x:Reference root}}"
                    HorizontalOptions="End"
                    VerticalOptions="Start"
-                   BackgroundColor="Red"
-                   TextColor="White"
-                   Padding="5" />
+                   Style="{StaticResource NotificationLabel}" />
         </Grid>
     </Grid>
 </ContentView>
