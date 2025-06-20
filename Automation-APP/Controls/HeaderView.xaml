@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Automation_APP.Controls.HeaderView"
+             x:Name="root">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <SearchBar Placeholder="Search location"
+                   Text="{Binding SearchText, Source={x:Reference root}}"
+                   SearchCommand="{Binding SearchCommand, Source={x:Reference root}}"
+                   Margin="10"
+                   Keyboard="Search"
+                   BackgroundColor="{StaticResource ThemeColor}"
+                   Grid.Column="0" />
+        <Grid Grid.Column="1" Padding="10">
+            <Button Command="{Binding NavigateCommand, Source={x:Reference root}}" Text="Notifications" />
+            <Label Text="{Binding BoundNotificationCount, Source={x:Reference root}}"
+                   HorizontalOptions="End"
+                   VerticalOptions="Start"
+                   BackgroundColor="Red"
+                   TextColor="White"
+                   Padding="5" />
+        </Grid>
+    </Grid>
+</ContentView>

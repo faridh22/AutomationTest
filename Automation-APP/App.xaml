@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             x:Class="Automation_APP.App">
+  <Application.Resources>
+    <Color x:Key="ThemeColor">#2196F3</Color>
+  </Application.Resources>
+</Application>
