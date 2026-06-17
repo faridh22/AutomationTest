@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Automation_APP.Models;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Maui.Graphics;

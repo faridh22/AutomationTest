@@ -1,4 +1,7 @@
+using System;
 using Automation_APP.ViewModels;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Devices;
 using SkiaSharp;
 using SkiaSharp.Views.Maui;
 
@@ -20,7 +23,7 @@ public partial class GamePage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        gameLoop.Start(Dispatcher, TimeSpan.FromMilliseconds(16));
+        gameLoop.Start((Microsoft.Maui.Dispatching.IDispatcher)Dispatcher, TimeSpan.FromMilliseconds(16));
     }
 
     protected override void OnDisappearing()
@@ -74,12 +77,12 @@ public partial class GamePage : ContentPage
     static void DrawGrid(SKCanvas canvas, float width, float height)
     {
         using var paint = new SKPaint { Color = new SKColor(255, 255, 255, 18), StrokeWidth = 1 };
-        for (var x = 0; x < width; x += CellSize)
+        for (float x = 0; x < width; x += CellSize)
         {
             canvas.DrawLine(x, 0, x, height, paint);
         }
 
-        for (var y = 0; y < height; y += CellSize)
+        for (float y = 0; y < height; y += CellSize)
         {
             canvas.DrawLine(0, y, width, y, paint);
         }

@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.Hosting;
 using SkiaSharp.Views.Maui.Controls.Hosting;
 
 namespace Automation_APP;
