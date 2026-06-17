@@ -1,6 +1,7 @@
+using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
+using Microsoft.Maui.Controls;
 
 namespace Automation_APP.Controls;
 
@@ -10,16 +11,14 @@ public partial class HeaderView : ContentView
     {
         InitializeComponent();
         BindingContext = this;
+        SearchCommand = new Command(async () => await OnSearchAsync());
+        NavigateCommand = new Command(async () => await OnNavigateAsync());
     }
 
-    [ObservableProperty]
-    string searchText = string.Empty;
-
-    [ObservableProperty]
-    ICommand searchCommand = new AsyncRelayCommand(OnSearchAsync);
-
-    [ObservableProperty]
-    int boundNotificationCount;
+    public string SearchText { get; set; } = string.Empty;
+    public ICommand SearchCommand { get; }
+    public int BoundNotificationCount { get; set; }
+    public ICommand NavigateCommand { get; }
 
     public static readonly BindableProperty NotificationCountProperty =
         BindableProperty.Create(nameof(NotificationCount), typeof(int), typeof(HeaderView), 0,
@@ -35,16 +34,13 @@ public partial class HeaderView : ContentView
         set => SetValue(NotificationCountProperty, value);
     }
 
-    [ObservableProperty]
-    ICommand navigateCommand = new AsyncRelayCommand(OnNavigateAsync);
-
     async Task OnNavigateAsync()
     {
         try
         {
             await Shell.Current.GoToAsync("NotificationsPage");
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.WriteLine(ex);
         }
@@ -56,7 +52,7 @@ public partial class HeaderView : ContentView
         {
             await Shell.Current.DisplayAlert("Search", $"Searching for {SearchText}", "OK");
         }
-        catch(Exception ex)
+        catch (Exception ex)
         {
             Console.WriteLine(ex);
         }

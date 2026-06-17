@@ -1,3 +1,5 @@
+using Microsoft.Maui.Controls;
+
 namespace Automation_APP.Views;
 
 public partial class MainPage : ContentPage
