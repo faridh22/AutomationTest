@@ -8,7 +8,7 @@ namespace SnacGame.Services;
 public class SpawnerService
 {
     private readonly Random _random = new();
-    private readonly float _cellSize;
+    private float _cellSize;
     private int _gridWidth;
     private int _gridHeight;
 
@@ -45,5 +45,4 @@ public class SpawnerService
     {
         ActivePowerUps.Remove(powerUp);
     }
-}
 }
