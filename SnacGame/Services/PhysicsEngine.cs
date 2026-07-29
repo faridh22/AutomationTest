@@ -69,16 +69,19 @@ public class PhysicsEngine
 		else if (CurrentDirection == Direction.Left) newHead = new SKPoint(newHead.X - _cellSize, newHead.Y);
 		else if (CurrentDirection == Direction.Right) newHead = new SKPoint(newHead.X + _cellSize, newHead.Y);
 
-		if (newHead.X < 0 || newHead.X >= _gridWidth * _cellSize || newHead.Y < 0 || newHead.Y >= _gridHeight * _cellSize || SnakeBody.Any(s => s.Equals(newHead)))
+		var willEatFood = newHead.Equals(FoodPosition);
+		var collisionBody = willEatFood ? SnakeBody : SnakeBody.Take(SnakeBody.Count - 1);
+		if (newHead.X < 0 || newHead.X >= _gridWidth * _cellSize || newHead.Y < 0 || newHead.Y >= _gridHeight * _cellSize || collisionBody.Any(s => s.Equals(newHead)))
 		{
 			HandleGameOver();
 			return;
 		}
 
 		SnakeBody.Insert(0, newHead);
-		if (Math.Abs(newHead.X - FoodPosition.X) < _cellSize / 2 && Math.Abs(newHead.Y - FoodPosition.Y) < _cellSize / 2)
+		if (willEatFood)
 		{
 			Score++;
+			_hapticService.PlaySuccessFeedback();
 			SpawnFood();
 		}
 		else
@@ -89,13 +92,26 @@ public class PhysicsEngine
 
 	private void SpawnFood()
 	{
-		int x = _random.Next(0, _gridWidth) * (int)_cellSize + _cellSize / 2;
-		int y = _random.Next(0, _gridHeight) * (int)_cellSize + _cellSize / 2;
-		FoodPosition = new SKPoint(x, y);
+		if (_gridWidth <= 0 || _gridHeight <= 0 || _cellSize <= 0)
+		{
+			return;
+		}
+
+		SKPoint position;
+		do
+		{
+			var x = _random.Next(0, _gridWidth) * (int)_cellSize;
+			var y = _random.Next(0, _gridHeight) * (int)_cellSize;
+			position = new SKPoint(x, y);
+		}
+		while (SnakeBody.Any(s => s.Equals(position)));
+
+		FoodPosition = position;
 	}
 
 	private void HandleGameOver()
 	{
+		_hapticService.PlayErrorFeedback();
 		WeakReferenceMessenger.Default.Send(new GameOverMessage(true));
 	}
 	
@@ -106,6 +122,8 @@ public class PhysicsEngine
 		SnakeBody.Add(new SKPoint(4 * 20, 5 * 20));
 		SnakeBody.Add(new SKPoint(3 * 20, 5 * 20));
 		Score = 0;
+		CurrentDirection = Direction.Right;
+		_nextDirection = Direction.Right;
 		SpawnFood();
 	}
 }

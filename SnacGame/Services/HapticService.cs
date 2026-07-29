@@ -1,4 +1,4 @@
-using Microsoft.Maui.Devices.Sensors;
+using Microsoft.Maui.Devices;
 
 namespace SnacGame.Services;
 
@@ -12,11 +12,17 @@ public class HapticService : IHapticService
 {
     public void PlaySuccessFeedback()
     {
-        HapticFeedback.Default.Perform(HapticFeedbackType.Click);
+        if (HapticFeedback.Default.IsSupported)
+        {
+            HapticFeedback.Default.Perform(HapticFeedbackType.Click);
+        }
     }
 
     public void PlayErrorFeedback()
     {
-        HapticFeedback.Default.Perform(HapticFeedbackType.LongPress);
+        if (HapticFeedback.Default.IsSupported)
+        {
+            HapticFeedback.Default.Perform(HapticFeedbackType.LongPress);
+        }
     }
 }

@@ -1,4 +1,5 @@
 using Microsoft.Extensions.Logging;
+using SkiaSharp.Views.Maui.Controls.Hosting;
 using SnacGame.Services;
 using SnacGame.ViewModels;
 using SnacGame.Repositories;
@@ -8,6 +9,8 @@ namespace SnacGame;
 
 public static class MauiProgram
 {
+	public static IServiceProvider Services { get; private set; } = default!;
+
 	public static MauiApp CreateMauiApp()
 	{
 		var builder = MauiApp.CreateBuilder();
@@ -34,6 +37,8 @@ public static class MauiProgram
 		builder.Services.AddTransient<GameViewModel>();
 		builder.Services.AddTransient<GamePage>();
 
-		return builder.Build();
+		var app = builder.Build();
+		Services = app.Services;
+		return app;
 	}
 }

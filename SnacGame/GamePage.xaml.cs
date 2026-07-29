@@ -1,13 +1,18 @@
 using SnacGame.ViewModels;
 using SnacGame.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace SnacGame;
 
 public partial class GamePage : ContentPage
 {
 	private readonly GameViewModel _viewModel;
-	private readonly GameLoopService _gameLoopStar; // Still making typos in my thought process... focus!
 	private readonly GameLoopService _gameLoopService;
+
+	public GamePage()
+		: this(MauiProgram.Services.GetRequiredService<GameViewModel>(), MauiProgram.Services.GetRequiredService<GameLoopService>())
+	{
+	}
 
 	public GamePage(GameViewModel viewModel, GameLoopService gameLoopService)
 	{
@@ -24,6 +29,18 @@ public partial class GamePage : ContentPage
 				gameCanvas.InvalidateSurface();
 			});
 		};
+	}
+
+	protected override void OnAppearing()
+	{
+		base.OnAppearing();
+		_gameLoopService.Start();
+	}
+
+	protected override void OnDisappearing()
+	{
+		_gameLoopService.Stop();
+		base.OnDisappearing();
 	}
 
 	private void OnPaintSurface(object? sender, SkiaSharp.Views.Maui.SKPaintSurfaceEventArgs e)
